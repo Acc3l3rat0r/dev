@@ -1,0 +1,8 @@
+rootProject.name = 'banking-system'
+include 'account'
+include 'authentication'
+include 'card'
+include 'customer-profile'
+include 'transaction'
+include 'event-history'
+include 'buildSrc'
