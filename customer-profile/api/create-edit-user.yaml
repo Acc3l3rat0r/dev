@@ -1,0 +1,62 @@
+openapi: 3.0.0
+info:
+  title: Register API
+  description: Register API for register new user
+  version: 1.0.0
+paths:
+  /register:
+    post:
+      summary: Create account
+      tags:
+        - POST
+      operationId: registerUser
+      requestBody:
+        required: True
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/userInput'
+      responses:
+        '200':
+          description: User registered successfully
+  /edit:
+    put:
+      summary: Editing user profile
+      tags:
+        - PUT
+      operationId: editProfile
+      requestBody:
+        required: True
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/userInput'
+      responses:
+        '200':
+          description: User profile successfully edited
+
+components:
+  responses:
+    Ok:
+      description: Ok
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/userInput'
+  schemas:
+    userInput:
+      type: object
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+        firstName:
+          type: string
+        lastName:
+          type: string
+      required:
+        - email
+        - password
+        - firstName
+        - lastName
