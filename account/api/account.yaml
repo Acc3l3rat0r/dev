@@ -1,44 +1,44 @@
 openapi: 3.0.0
 info:
-  title: Bill system API
-  description: Create, delete bill and add money
+  title: Account system API
+  description: Create, delete account and add money
   version: 1.0.0
 paths:
   /create:
     post:
-      summary: Create a new bill
+      summary: Create a new account
       tags:
         - POST
-      operationId: createBill
+      operationId: createAccount
       requestBody:
         required: True
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/bill'
+              $ref: '#/components/schemas/account'
       responses:
         '200':
-          description: Bill was created
-  /delete/{billId}:
+          description: Account was created
+  /delete/{accountId}:
     get:
-      summary: Delete bill
+      summary: Delete account
       tags:
         - GET
-      operationId: deleteBill
+      operationId: deleteAccount
       parameters:
         - in: path
-          name: billId
+          name: accountId
           required: True
-          description: Id of bill
+          description: Id of account
           schema:
             type: string
             format: uuid
       responses:
         '200':
-          description: Bill was deleted
+          description: Account was deleted
   /addMoney:
     put:
-      summary: Add money to bill
+      summary: Add money to account
       tags:
         - PUT
       operationId: addMoney
@@ -58,28 +58,28 @@ components:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/bill'
+            $ref: '#/components/schemas/account'
   schemas:
-    bill:
+    account:
       type: object
       properties:
-        billId:
+        accountId:
           type: string
         userId:
           type: string
         balance:
           type: integer
       required:
-        - billId
+        - accountId
         - userId
         - balance
     payment:
       type: object
       properties:
-        billId:
+        accountId:
           type: string
         amount:
           type: integer
       required:
-        - billId
+        - accountId
         - amount

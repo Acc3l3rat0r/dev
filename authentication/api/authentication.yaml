@@ -9,19 +9,19 @@ paths:
       summary: Login in system
       tags:
         - POST
-      operationId: login
+      operationId: authenticate
       requestBody:
         required: True
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/login'
+              $ref: '#/components/schemas/authentication'
       responses:
         '200':
           description: Logged successful
 components:
   schemas:
-    login:
+    authentication:
       type: object
       properties:
         email:

@@ -1,7 +1,7 @@
 openapi: 3.0.0
 info:
   title: Register API
-  description: Register API for register new user
+  description: Register API for register new customer
   version: 1.0.0
 paths:
   /register:
@@ -9,19 +9,19 @@ paths:
       summary: Create account
       tags:
         - POST
-      operationId: registerUser
+      operationId: registerCustomer
       requestBody:
         required: True
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/userInput'
+              $ref: '#/components/schemas/customerInput'
       responses:
         '200':
-          description: User registered successfully
+          description: Customer registered successfully
   /edit:
     put:
-      summary: Editing user profile
+      summary: Editing customer profile
       tags:
         - PUT
       operationId: editProfile
@@ -30,10 +30,10 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/userInput'
+              $ref: '#/components/schemas/customerInput'
       responses:
         '200':
-          description: User profile successfully edited
+          description: Customer profile successfully edited
 
 components:
   responses:
@@ -42,9 +42,9 @@ components:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/userInput'
+            $ref: '#/components/schemas/customerInput'
   schemas:
-    userInput:
+    customerInput:
       type: object
       properties:
         email:
