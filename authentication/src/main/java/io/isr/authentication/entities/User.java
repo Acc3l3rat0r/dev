@@ -1,4 +1,4 @@
-package io.isr.customer_profile.entities;
+package io.isr.authentication.entities;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -8,7 +8,7 @@ import java.util.Set;
 public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private String id;
+	private Long id;
 	
 	private String email;
 	private String password;
@@ -22,11 +22,11 @@ public class User {
 			inverseJoinColumns=@JoinColumn(name="role_id"))
 	private Set<Role> roles;
 	
-	public String getId() {
+	public Long getId() {
 		return id;
 	}
 	
-	public void setId(String id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 	

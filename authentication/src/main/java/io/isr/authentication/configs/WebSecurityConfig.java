@@ -1,6 +1,6 @@
-package com.example.reglogv2.configs;
+package io.isr.authentication.configs;
 
-import com.example.reglogv2.services.CustomUserDetailsService;
+import io.isr.authentication.services.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -27,7 +27,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		UserDetailsService userDetailsService = mongoUserDetails();
+		UserDetailsService userDetailsService = UserDetails();
 		auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder());
 		
 	}
@@ -36,7 +36,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		http.httpBasic().disable().csrf().disable().sessionManagement()
 				.sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().authorizeRequests()
-				.antMatchers("/auth/login").permitAll().antMatchers("/auth/register").permitAll()
+				.antMatchers("/login").permitAll().antMatchers("/register").permitAll()
 				.antMatchers("/api/products/**").hasAuthority("ADMIN").anyRequest().authenticated().and().csrf()
 				.disable().exceptionHandling().authenticationEntryPoint(unauthorizedEntryPoint()).and()
 				.apply(new JwtConfigurer(jwtTokenProvider));
@@ -66,7 +66,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	}
 	
 	@Bean
-	public UserDetailsService mongoUserDetails() {
+	public UserDetailsService UserDetails() {
 		return new CustomUserDetailsService();
 	}
 }

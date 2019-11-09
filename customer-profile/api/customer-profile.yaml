@@ -4,21 +4,6 @@ info:
   description: Register API for register new customer
   version: 1.0.0
 paths:
-  /register:
-    post:
-      summary: Create account
-      tags:
-        - POST
-      operationId: registerCustomer
-      requestBody:
-        required: True
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/customerInput'
-      responses:
-        '200':
-          description: Customer registered successfully
   /edit:
     put:
       summary: Editing customer profile

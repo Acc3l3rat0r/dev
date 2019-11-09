@@ -1,6 +1,6 @@
-package com.example.reglogv2.repositories;
+package io.isr.authentication.repository;
 
-import com.example.reglogv2.model.User;
+import io.isr.authentication.entities.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

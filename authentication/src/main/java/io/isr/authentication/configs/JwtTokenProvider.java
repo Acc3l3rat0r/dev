@@ -1,8 +1,8 @@
-package com.example.reglogv2.configs;
+package io.isr.authentication.configs;
 
 
-import com.example.reglogv2.model.Role;
-import com.example.reglogv2.services.CustomUserDetailsService;
+import io.isr.authentication.entities.Role;
+import io.isr.authentication.services.CustomUserDetailsService;
 import io.jsonwebtoken.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

@@ -1,6 +1,10 @@
+import io.isr.gradle.swaggerSpringGen
+
 plugins {
     java
+    id("org.springframework.boot") version "2.2.1.RELEASE"
 }
+apply(plugin = "io.spring.dependency-management")
 
 group = "io.isr"
 version = "0.1"
@@ -9,7 +13,22 @@ repositories {
     mavenCentral()
 }
 
+swaggerSpringGen("customer-profile", file("api/customer-profile.yaml"))
+
 dependencies {
+    implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+    implementation("com.fasterxml.jackson.core:jackson-annotations:2.10.0")
+    implementation("com.fasterxml.jackson.core:jackson-core:2.10.0")
+    implementation("com.fasterxml.jackson.core:jackson-databind:2.10.0")
+    implementation("io.swagger.core.v3:swagger-annotations:2.0.0")
+    implementation("io.swagger.core.v3:swagger-core:2.0.0")
+    implementation("io.swagger.core.v3:swagger-models:2.0.0")
+    implementation("io.swagger.core.v3:swagger-jaxrs2:2.0.0")
+    implementation("io.springfox:springfox-swagger2:2.9.2")
+    implementation("io.springfox:springfox-swagger-ui:2.9.2")
+    implementation("org.postgresql:postgresql:42.2.8")
+    implementation("org.springframework.boot:spring-boot-starter-security:2.2.1.RELEASE")
     testCompile("junit", "junit", "4.12")
 }
 

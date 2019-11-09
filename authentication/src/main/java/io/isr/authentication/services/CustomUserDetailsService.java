@@ -1,9 +1,9 @@
-package com.example.reglogv2.services;
+package io.isr.authentication.services;
 
-import com.example.reglogv2.model.Role;
-import com.example.reglogv2.model.User;
-import com.example.reglogv2.repositories.RoleRepository;
-import com.example.reglogv2.repositories.UserRepository;
+import io.isr.authentication.entities.Role;
+import io.isr.authentication.entities.User;
+import io.isr.authentication.repository.RoleRepository;
+import io.isr.authentication.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

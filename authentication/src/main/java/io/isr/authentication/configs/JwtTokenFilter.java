@@ -1,4 +1,4 @@
-package com.example.reglogv2.configs;
+package io.isr.authentication.configs;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;

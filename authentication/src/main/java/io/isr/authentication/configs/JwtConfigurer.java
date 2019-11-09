@@ -1,4 +1,4 @@
-package com.example.reglogv2.configs;
+package io.isr.authentication.configs;
 
 import org.springframework.security.config.annotation.SecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;

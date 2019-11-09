@@ -4,6 +4,21 @@ info:
   description: Authenticate a user
   version: 1.0.0
 paths:
+  /register:
+    post:
+      summary: Create account
+      tags:
+        - POST
+      operationId: registerCustomer
+      requestBody:
+        required: True
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/customerInput'
+      responses:
+        '200':
+          description: Customer registered successfully
   /login:
     post:
       summary: Login in system
@@ -21,6 +36,22 @@ paths:
           description: Logged successful
 components:
   schemas:
+    customerInput:
+      type: object
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+        firstName:
+          type: string
+        lastName:
+          type: string
+      required:
+        - email
+        - password
+        - firstName
+        - lastName
     authentication:
       type: object
       properties:
