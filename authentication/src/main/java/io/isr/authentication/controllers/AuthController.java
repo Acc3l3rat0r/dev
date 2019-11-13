@@ -11,6 +11,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,6 +21,7 @@ import java.util.Map;
 
 import static org.springframework.http.ResponseEntity.ok;
 
+@CrossOrigin
 @RestController
 public class AuthController {
 	@Autowired
@@ -48,6 +50,7 @@ public class AuthController {
 			throw new BadCredentialsException("Invalid email/password supplied");
 		}
 	}
+	
 	@PostMapping("/register")
 	public ResponseEntity register(@RequestBody User user) {
 		User userExists = userService.findUserByEmail(user.getEmail());
