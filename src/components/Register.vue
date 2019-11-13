@@ -7,13 +7,13 @@
             <div class="text-center">
               <h3 class="pink-text mb-5"><strong>Sign up</strong></h3>
             </div>
-            <mdb-input label="First name" type="text"/>
-            <mdb-input label="Last Name" type="text"/>
-            <mdb-input label="Email" type="text"/>
-            <mdb-input label="Password" type="password"/>
+            <mdb-input label="First name" type="text" v-model="firstName"/>
+            <mdb-input label="Last Name" type="text" v-model="lastName"/>
+            <mdb-input label="Email" type="text" v-model="email"/>
+            <mdb-input label="Password" type="password" v-model="password"/>
             <mdb-row class="d-flex align-items-center mb-4">
               <mdb-col md="6" class="text-center">
-                <button type="button" class="btn btn-pink btn-block btn-rounded z-depth-1">Sign up</button>
+                <button @click="register" type="button" class="btn btn-pink btn-block btn-rounded z-depth-1">Sign up</button>
               </mdb-col>
               <mdb-col md="6">
                 <p class="font-small grey-text d-flex justify-content-end">Have an account? <a href="#/login" class="blue-text ml-1"> Log in</a></p>
@@ -28,7 +28,16 @@
 
 <script>
   import { mdbRow, mdbCol, mdbCard, mdbCardBody, mdbInput } from 'mdbvue';
+  import axios from 'axios'
   export default {
+    data(){
+        return{
+            email: '',
+            password: '',
+            firstName: '',
+            lastName: ''
+        }
+    },
     name: 'FormsPage',
     components: {
       mdbRow,
@@ -36,6 +45,23 @@
       mdbCard,
       mdbCardBody,
       mdbInput
+    },
+    methods: {
+        register(){
+          axios.post('http://localhost:9000/register', {
+          'email': this.$data.email, 
+          'password': this.$data.password,
+          'firstName': this.$data.firstName,
+          'lastName': this.$data.lastName
+          })
+          .then(response =>{
+            console.log(response);
+            this.$router.push('/login')
+          })
+          .catch(error => {
+            console.log(error);
+          })
+        }
     }
   }
 </script>
@@ -85,4 +111,9 @@
   .form-light .footer {
     border-bottom-left-radius: .3rem;
     border-bottom-right-radius: .3rem; }
+  
+  .form-light {
+   margin-left: 38%;
+   margin-top: 50px;
+  }
 </style>

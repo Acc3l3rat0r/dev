@@ -1,52 +1,40 @@
 <template>
-   <div div="signin">
-       <div class="login-form">
-           <b-card
-             title="Signin"
-             tag="article"
-             style="max-width: 20rem;"
-             class="mb-2"
-           >
-           <div>
-               <b-alert
-                     :show="dismissCountDown"
-                     dismissible
-                     variant="danger"
-                     @dismissed="dismissCountDown=0"
-                     @dismiss-count-down="countDownChanged"
-                   > {{ alertMessage }}
-                   </b-alert>
-           </div>
-             <div>
-                <b-form-input type="text" placeholder="Email" v-model="email" />
-                <div class="mt-2"></div>
-
-                <b-form-input type="password" placeholder="Password" v-model="password" />
-                <div class="mt-2"></div>
-             </div>
-
-             <b-button v-on:click="login" variant="primary">Login</b-button>
-
-             <hr class="my-4" />
-
-             <b-button variant="link">Forget password?</b-button>
-           </b-card>
-         </div>
-   </div>
+  <section class="form-simple">
+    <mdb-row>
+      <mdb-col md="5">
+        <mdb-card>
+          <div class="header pt-3 grey lighten-2">
+            <mdb-row class="d-flex justify-content-start">
+              <h3 class="deep-grey-text mt-3 mb-4 pb-1 mx-5">Log in</h3>
+            </mdb-row>
+          </div>
+          <mdb-card-body class="mx-4 mt-4">
+            <mdb-input label="Your email" type="text" v-model="email"/>
+            <mdb-input label="Your password" type="password" containerClass="mb-0" v-model="password"/>
+            <p class="font-small grey-text d-flex justify-content-end">Forgot <a href="#" class="dark-grey-text font-weight-bold ml-1"> Password?</a></p>
+            <div class="text-center mb-4 mt-5">
+              <mdb-btn @click="login" color="danger" type="button" class="btn-block z-depth-2">Log in</mdb-btn>
+            </div>
+            <p class="font-small grey-text d-flex justify-content-center">Don't have an account? <a href="#/register" class="dark-grey-text font-weight-bold ml-1"> Sign up</a></p>
+          </mdb-card-body>
+        </mdb-card>
+      </mdb-col>
+    </mdb-row>
+  </section>
 </template>
 
 <script>
-  //import { mdbRow, mdbCol, mdbCard, mdbCardBody, mdbInput, mdbBtn } from 'mdbvue';
+  import { mdbRow, mdbCol, mdbCard, mdbCardBody, mdbInput, mdbBtn } from 'mdbvue';
   import axios from 'axios'
 
   export default {
     data(){
         return{
-          email: 'mail4@mail.ru',
-          password: '12345'
+            email: '',
+            password: ''
         }
     },
-    /*name: 'FormsPage',
+    name: 'FormsPage',
     components: {
       mdbRow,
       mdbCol,
@@ -54,13 +42,13 @@
       mdbCardBody,
       mdbInput,
       mdbBtn
-    },*/
+    },
     methods: {
         login(){
           axios.post('http://localhost:9000/login', {'email': this.$data.email, 'password': this.$data.password})
           .then(response =>{
             console.log(response);
-            this.$router.push('/register')
+            this.$router.push('/home')
           })
           .catch(error => {
             console.log(error);
@@ -71,8 +59,30 @@
 </script>
 
 <style>
-.login-form {
+  .form-simple .font-small {
+    font-size: 0.8rem; }
+
+  .form-simple .header {
+    border-top-left-radius: .3rem;
+    border-top-right-radius: .3rem; }
+
+  .form-simple input[type=text]:focus:not([readonly]) {
+    border-bottom: 1px solid #ff3547;
+    -webkit-box-shadow: 0 1px 0 0 #ff3547;
+    box-shadow: 0 1px 0 0 #ff3547; }
+
+  .form-simple input[type=text]:focus:not([readonly]) + label {
+    color: #4f4f4f; }
+
+  .form-simple input[type=password]:focus:not([readonly]) {
+    border-bottom: 1px solid #ff3547;
+    -webkit-box-shadow: 0 1px 0 0 #ff3547;
+    box-shadow: 0 1px 0 0 #ff3547; }
+
+  .form-simple input[type=password]:focus:not([readonly]) + label {
+    color: #4f4f4f; }
+  .form-simple {
    margin-left: 38%;
    margin-top: 50px;
-}
+  }
 </style>

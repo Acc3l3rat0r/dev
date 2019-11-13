@@ -1,6 +1,5 @@
 <template>
-  <div class="home">
-    <img alt="MDB logo" src="../assets/logo-mdb-vue-small.png">
+  <div class="register">
     <Register msg="Welcome to Your MDB Vue.js App"/>
   </div>
 </template>
@@ -11,7 +10,7 @@ import Register from '@/components/Register.vue'
 //import Register from '@/components/Register.vue'
 
 export default {
-  name: 'home',
+  name: 'register',
   components: {
     Register
   }
