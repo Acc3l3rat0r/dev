@@ -45,7 +45,7 @@
     },
     methods: {
         login(){
-          axios.post('http://localhost:9000/login', {'email': this.$data.email, 'password': this.$data.password})
+          axios.post('/auth/login', {'email': this.$data.email, 'password': this.$data.password})
           .then(response =>{
             console.log(response);
             this.$router.push('/home')
