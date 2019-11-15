@@ -6,3 +6,5 @@ include 'customer-profile'
 include 'transaction'
 include 'event-history'
 include 'buildSrc'
+include 'eureka-server'
+
