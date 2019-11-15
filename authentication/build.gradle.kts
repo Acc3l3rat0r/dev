@@ -3,6 +3,7 @@ import io.isr.gradle.swaggerSpringGen
 plugins {
     java
     id("org.springframework.boot") version "2.2.1.RELEASE"
+    id ("io.spring.dependency-management") version "1.0.8.RELEASE"
 }
 apply(plugin = "io.spring.dependency-management")
 
@@ -11,11 +12,14 @@ version = "0.1"
 
 repositories {
     mavenCentral()
+    maven { url = uri("https://repo.spring.io/milestone") }
+    extra["springCloudVersion"] = "Hoxton.RC2"
 }
 
 swaggerSpringGen("authentication", file("api/authentication.yaml"))
 
 dependencies {
+    implementation("org.springframework.cloud:spring-cloud-starter-netflix-eureka-client")
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("com.fasterxml.jackson.core:jackson-annotations:2.10.0")
@@ -31,6 +35,12 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-security:2.2.1.RELEASE")
     implementation("io.jsonwebtoken:jjwt:0.9.1")
     testCompile("junit", "junit", "4.12")
+}
+
+dependencyManagement {
+    imports {
+        mavenBom("org.springframework.cloud:spring-cloud-dependencies:${property("springCloudVersion")}")
+    }
 }
 
 configure<JavaPluginConvention> {

@@ -7,4 +7,5 @@ include 'transaction'
 include 'event-history'
 include 'buildSrc'
 include 'eureka-server'
+include 'zuul-gateway'
 
