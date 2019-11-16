@@ -34,12 +34,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.csrf().disable().authorizeRequests()
-				.antMatchers("/**").permitAll()
-				.anyRequest().authenticated()
-				.and()
-				.exceptionHandling().authenticationEntryPoint(unauthorizedEntryPoint()).and()
-				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+		http.httpBasic().disable().csrf().disable().sessionManagement()
+				.sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().authorizeRequests()
+				.antMatchers("/login").permitAll().antMatchers("/register").permitAll()
+				.antMatchers("/home").hasAuthority("ADMIN").anyRequest().authenticated().and().csrf()
+				.disable().exceptionHandling().authenticationEntryPoint(unauthorizedEntryPoint()).and()
+				.apply(new JwtConfigurer(jwtTokenProvider));
+		http.cors();
 	}
 	
 	@Override
