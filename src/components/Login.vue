@@ -47,8 +47,8 @@
         login(){
           axios.post('/auth/login', {'email': this.$data.email, 'password': this.$data.password})
           .then(response =>{
-            console.log(response);
-            this.$router.push('/home')
+          this.$store.dispatch('login', {'token': response.data.token});
+          this.$router.push('/home')
           })
           .catch(error => {
             console.log(error);
