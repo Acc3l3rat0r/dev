@@ -6,9 +6,9 @@
 
   <div class="list">
     <b-list-group>
-      <b-list-group-item>Firstname</b-list-group-item>
-      <b-list-group-item>Secondname</b-list-group-item>
-      <b-list-group-item>Lastname</b-list-group-item>
+      <b-list-group-item>{{firstName}}</b-list-group-item>
+      <b-list-group-item>{{lastName}}</b-list-group-item>
+      <b-list-group-item>{{email}}</b-list-group-item>
     </b-list-group>
   </div>
 
@@ -19,7 +19,7 @@
     <mdb-navbar-toggler>
       <mdb-navbar-nav>
         <mdb-nav-item href="#/home" active>Home</mdb-nav-item>
-        <mdb-nav-item href="#">Transactions</mdb-nav-item>
+        <mdb-nav-item>Transactions</mdb-nav-item>
         <mdb-nav-item @click="logout">Logout</mdb-nav-item>
       </mdb-navbar-nav>
     </mdb-navbar-toggler>
@@ -29,11 +29,14 @@
 
 <script>
   import { mdbNavbar, mdbNavbarBrand, mdbNavbarToggler, mdbNavbarNav, mdbNavItem} from 'mdbvue';
+  import axios from 'axios'
+
   export default {
     data(){
         return{
-            email: '',
-            password: '',
+            firstName: '',
+            lastName: '',
+            email: ''
         }
     },
     name: 'NavbarPage',
@@ -48,7 +51,18 @@
      logout() {
           this.$store.dispatch('logout');
           this.$router.push('/login')
+     },
+     loadData(){
+       axios.get('/customer/info/'+this.$store.getters.getToken)
+      .then(response =>{
+        this.$data.firstName = response.data.firstName;
+        this.$data.lastName = response.data.lastName;
+        this.$data.email = response.data.email;
+      })
      }
+    },
+    mounted(){
+      this.loadData();
     }
   }
 </script>
