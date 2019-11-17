@@ -1,5 +1,6 @@
 package io.isr.authentication.services;
 
+import io.isr.authentication.dto.RegisterDto;
 import io.isr.authentication.entities.Role;
 import io.isr.authentication.entities.User;
 import io.isr.authentication.repository.RoleRepository;
@@ -30,8 +31,12 @@ public class CustomUserDetailsService implements UserDetailsService {
 		return userRepository.findByEmail(email);
 	}
 	
-	public void saveUser(User user){
-		user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+	public void saveUser(RegisterDto registerDto){
+		User user = new User();
+		user.setEmail(registerDto.getEmail());
+		user.setFirstName(registerDto.getFirstName());
+		user.setLastName(registerDto.getLastName());
+		user.setPassword(bCryptPasswordEncoder.encode(registerDto.getPassword()));
 		user.setEnabled(true);
 		Role userRole = roleRepository.findByRole("ADMIN");
 		user.setRoles(new HashSet<>(Collections.singletonList(userRole)));
