@@ -3,6 +3,10 @@ package io.isr.authentication.dto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class UserOut {
+	
+	@JsonProperty
+	private Long id;
+	
 	@JsonProperty("email")
 	private String email;
 	
@@ -11,6 +15,14 @@ public class UserOut {
 	
 	@JsonProperty("lastName")
 	private String lastName;
+	
+	public Long getId() {
+		return id;
+	}
+	
+	public void setId(Long id) {
+		this.id = id;
+	}
 	
 	public String getEmail() {
 		return email;

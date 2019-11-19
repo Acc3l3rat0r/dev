@@ -68,6 +68,7 @@ public class AuthController {
 		userOut.setEmail(user.getEmail());
 		userOut.setFirstName(user.getFirstName());
 		userOut.setLastName(user.getLastName());
+		userOut.setId(user.getId());
 		return userOut;
 	}
 }

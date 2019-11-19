@@ -1,9 +1,8 @@
-package io.isr.customer_profile.dto;
+package io.isr.card.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class UserDto {
-	
 	@JsonProperty
 	private Long id;
 	
@@ -38,5 +37,13 @@ public class UserDto {
 	
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
+	}
+	
+	public Long getId() {
+		return id;
+	}
+	
+	public void setId(Long id) {
+		this.id = id;
 	}
 }
