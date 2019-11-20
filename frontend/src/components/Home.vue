@@ -76,7 +76,7 @@
           this.$router.push('/login')
      },
      loadData(){
-       axios.get('/customer/info/'+this.$store.getters.getToken)
+       axios.get('/api/customer/info/'+this.$store.getters.getToken)
       .then(response =>{
         this.$data.firstName = response.data.firstName;
         this.$data.lastName = response.data.lastName;
@@ -84,19 +84,19 @@
       })
      },
      createCard(){
-       axios.post('/card/createCard/'+this.$store.getters.getToken)
+       axios.post('/api/card/createCard/'+this.$store.getters.getToken)
        .then(response =>{
           console.log(response);
        })
      },
      loadCard(){
-       axios.get('/card/getCard/'+this.$store.getters.getToken)
+       axios.get('/api/card/getCard/'+this.$store.getters.getToken)
        .then(response =>{
          this.$data.cards = response.data
        })
      },
      pay(){
-       axios.put('/card/pay', {'numberOfCard': this.$data.numberOfCard, 'amount': this.$data.amount})
+       axios.put('/api/card/pay', {'numberOfCard': this.$data.numberOfCard, 'amount': this.$data.amount})
        .then(response =>{
          console.log(response);
        })

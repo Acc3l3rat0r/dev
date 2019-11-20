@@ -45,7 +45,7 @@
     },
     methods: {
         login(){
-          axios.post('/auth/login', {'email': this.$data.email, 'password': this.$data.password})
+          axios.post('/api/auth/login', {'email': this.$data.email, 'password': this.$data.password})
           .then(response =>{
           this.$store.dispatch('login', {'token': response.data.token});
           this.$router.push('/home')

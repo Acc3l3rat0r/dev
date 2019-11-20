@@ -68,6 +68,12 @@ services:
       EUREKA_URL: "http://discovery-service:8761/eureka/"
     networks:
       - internal
+  transaction:
+    build: ./transaction
+    environment:
+      EUREKA_URL: "http://discovery-service:8761/eureka/"
+    networks:
+      - internal
   discovery-service:
     build: ./eureka-server
     ports:

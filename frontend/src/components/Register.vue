@@ -48,7 +48,7 @@
     },
     methods: {
         register(){
-          axios.post('/auth/register', {
+          axios.post('/api/auth/register', {
           'email': this.$data.email, 
           'password': this.$data.password,
           'firstName': this.$data.firstName,
