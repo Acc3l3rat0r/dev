@@ -1,4 +1,5 @@
 import io.isr.gradle.swaggerSpringGen
+import org.springframework.boot.gradle.tasks.bundling.BootJar
 
 plugins {
     java

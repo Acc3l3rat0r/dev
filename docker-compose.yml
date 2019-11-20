@@ -1,0 +1,46 @@
+version: '3'
+services:
+  gateway:
+    build: ./zuul-gateway
+    ports:
+      - "80:9000"
+    environment:
+      GATEWAY_PORT: 9000
+      EUREKA_URL: "http://discovery-service:8761/eureka/"
+      FRONTEND_URL: "http://frontend"
+    networks:
+      - internal
+  frontend:
+    build: ./frontend
+    ports:
+      - "9000:80"
+    networks:
+      - internal
+#  authentication:
+#    build: ./authentication
+#    environment:
+#      EUREKA_URL: "http://discovery-service:8761/eureka/"
+#      DB_HOST: 55
+#      DB_PORT: 55
+#      DB_USERNAME: 55
+#      DB_PASSWORD: 55
+#    networks:
+#      - internal
+  customer-profile:
+    build: ./customer-profile
+    environment:
+      EUREKA_URL: "http://discovery-service:8761/eureka/"
+    networks:
+      - internal
+  discovery-service:
+    build: ./eureka-server
+    ports:
+      - "8761:8761"
+    environment:
+      EUREKA_PORT: 8761
+    networks:
+      - internal
+
+networks:
+  internal:
+    driver: bridge
