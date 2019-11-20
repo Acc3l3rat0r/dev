@@ -16,16 +16,52 @@ services:
       - "9000:80"
     networks:
       - internal
-#  authentication:
-#    build: ./authentication
-#    environment:
-#      EUREKA_URL: "http://discovery-service:8761/eureka/"
-#      DB_HOST: 55
-#      DB_PORT: 55
-#      DB_USERNAME: 55
-#      DB_PASSWORD: 55
-#    networks:
-#      - internal
+  authentication:
+    build: ./authentication
+    environment:
+      EUREKA_URL: "http://discovery-service:8761/eureka/"
+      DB_HOST: authentication-db
+      DB_PORT: 5432
+      DB_USERNAME: authentication
+      DB_PASSWORD: CzgjDw7V&Xd2d*
+      DB_NAME: authentication
+    networks:
+      - internal
+    depends_on:
+      - authentication-db
+  authentication-db:
+    image: postgres
+    environment:
+      POSTGRES_USER: authentication
+      POSTGRES_PASSWORD: CzgjDw7V&Xd2d*
+      POSTGRES_DB: authentication
+    volumes:
+      - /var/lib/authentication-db:/var/lib/postgresql/data
+    networks:
+      - internal
+  card:
+    build: ./card
+    environment:
+      EUREKA_URL: "http://discovery-service:8761/eureka/"
+      DB_HOST: card-db
+      DB_PORT: 5432
+      DB_USERNAME: card
+      DB_PASSWORD: C44na&7kou8kF#
+      DB_NAME: card
+    networks:
+      - internal
+    depends_on:
+      - card-db
+  card-db:
+    image: postgres
+    environment:
+      POSTGRES_USER: card
+      POSTGRES_PASSWORD: C44na&7kou8kF#
+      POSTGRES_DB: card
+    volumes:
+      - /var/lib/card-db:/var/lib/postgresql/data
+    networks:
+      - internal
   customer-profile:
     build: ./customer-profile
     environment:
