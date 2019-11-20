@@ -37,7 +37,7 @@
     <mdb-navbar-toggler>
       <mdb-navbar-nav>
         <mdb-nav-item href="#/home" active>Home</mdb-nav-item>
-        <mdb-nav-item>Transactions</mdb-nav-item>
+        <mdb-nav-item href="#/transaction">Transactions</mdb-nav-item>
         <mdb-nav-item @click="logout">Logout</mdb-nav-item>
       </mdb-navbar-nav>
     </mdb-navbar-toggler>
@@ -86,6 +86,7 @@
      createCard(){
        axios.post('/api/card/createCard/'+this.$store.getters.getToken)
        .then(response =>{
+         this.loadCard();
           console.log(response);
        })
      },
@@ -98,6 +99,7 @@
      pay(){
        axios.put('/api/card/pay', {'numberOfCard': this.$data.numberOfCard, 'amount': this.$data.amount})
        .then(response =>{
+         this.loadCard();
          console.log(response);
        })
      }

@@ -1,6 +1,7 @@
 package io.isr.card.controllers;
 
 import io.isr.card.dto.PaymentDto;
+import io.isr.card.dto.TransferDto;
 import io.isr.card.dto.UserDto;
 import io.isr.card.entities.Card;
 import io.isr.card.repositories.CardRepositories;
@@ -43,15 +44,28 @@ public class CardController {
 		return ok(cards);
 	}
 	
+	
+	@PutMapping("/putMoney")
+	public ResponseEntity putMoney(@RequestBody TransferDto transferDto){
+		Card cardFrom = cardService.findByCardNumber(transferDto.getCardFrom());
+		Card cardTo = cardService.findByCardNumber(transferDto.getCardTo());
+		Long amount = transferDto.getAmount();
+		cardFrom.setBalance(cardFrom.getBalance()-amount);
+		cardTo.setBalance(cardTo.getBalance()+amount);
+		cardRepositories.save(cardFrom);
+		cardRepositories.save(cardTo);
+		Map<Object, Object> model = new HashMap<>();
+		model.put("message", "Money transferred");
+		return ok(model);
+	}
+	
 	@PutMapping("/pay")
 	public ResponseEntity pay(@RequestBody PaymentDto paymentDto){
 		Card card = cardService.findByCardNumber(paymentDto.getNumberOfCard());
-		card.setBalance(paymentDto.getAmount());
+		card.setBalance(card.getBalance()+paymentDto.getAmount());
 		cardRepositories.save(card);
 		Map<Object, Object> model = new HashMap<>();
 		model.put("message", "Successful pay operation ");
 		return ok(model);
 	}
-	
-	
 }

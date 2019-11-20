@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import Login from './views/Login.vue'
 import Register from './views/Register.vue'
 import Home from './views/Home.vue'
+import Transaction from '@/views/Transaction.vue'
 import {store} from './store'
 
 Vue.use(Router)
@@ -31,6 +32,14 @@ const router = new Router({
       component: Register,
       meta: {
         auth: false
+      }
+    },
+    {
+      path: '/transaction',
+      name: 'transaction',
+      component: Transaction,
+      meta: {
+        auth: true
       }
     }
   ]
