@@ -61,3 +61,10 @@
     }
   }
 </script>
+
+<style>
+.transfer {
+  margin-left: 20%;
+  width: 40%;
+  }
+</style>

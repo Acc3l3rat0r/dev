@@ -47,7 +47,7 @@
         login(){
           axios.post('/api/auth/login', {'email': this.$data.email, 'password': this.$data.password})
           .then(response =>{
-          this.$store.dispatch('login', {'token': response.data.token});
+          this.$cookie.set('token', response.data.token, 1);
           this.$router.push('/home')
           })
           .catch(error => {

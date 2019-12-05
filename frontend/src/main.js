@@ -13,6 +13,9 @@ import {store} from './store'
 Vue.config.productionTip = false
 Vue.use(BootstrapVue) 
 
+var VueCookie = require('vue-cookie');
+Vue.use(VueCookie);
+
 new Vue({
   router,
   store,

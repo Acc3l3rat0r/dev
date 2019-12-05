@@ -8,6 +8,7 @@ import io.isr.authentication.entities.User;
 import io.isr.authentication.repository.UserRepository;
 import io.isr.authentication.services.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -55,9 +56,7 @@ public class AuthController {
 			throw new BadCredentialsException("User with email: " + registerDto.getEmail() + " already exists");
 		}
 		userService.saveUser(registerDto);
-		Map<Object, Object> model = new HashMap<>();
-		model.put("message", "User registered successfully");
-		return ok(model);
+		return ok(HttpStatus.OK);
 	}
 	
 	@GetMapping("/getUser/{token}")

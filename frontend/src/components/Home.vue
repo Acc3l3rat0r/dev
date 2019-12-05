@@ -15,18 +15,42 @@
   <div class="list2">
     <b-list-group>
       <b-list-group-item>MY CARDS</b-list-group-item>
-      <li v-for="card in cards" :key="card" class="list3">
-        {{ card.cardNumber }} balance {{card.balance}}$
-      </li>
+
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Card nubmber</th>
+            <th>Balance</th>
+          </tr>
+        </thead>
+        <tbody class="list3">
+          <tr v-for="card in cards" :key="card">
+            <td>{{card.cardNumber}}</td>
+            <td>{{card.balance}}</td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+
       <mdb-btn class="button" color="primary" @click="createCard">Add new card</mdb-btn>
+      <mdb-btn class="button" color="primary" @click.native="modal = true">Add money</mdb-btn>
     </b-list-group>
   </div>
 
-  <div class="pay">
-    <b-list-group-item class="item">Add money to card</b-list-group-item>
-    <mdb-input type="text" placeholder="Card number" v-model="numberOfCard"/>
-    <mdb-input type="text" placeholder="Amount" v-model="amount"/>
-    <mdb-btn color="primary" @click="pay">To pay</mdb-btn>
+  <div>
+    <mdb-modal :show="modal" @close="modal = false">
+      <mdb-modal-header>
+        <mdb-modal-title>Add money</mdb-modal-title>
+      </mdb-modal-header>
+      <mdb-modal-body>
+          <mdb-input type="text" placeholder="Card number" v-model="numberOfCard"/>
+          <mdb-input type="text" placeholder="Amount" v-model="amount"/>
+          <mdb-btn color="primary" @click="pay">To pay</mdb-btn>
+      </mdb-modal-body>
+      <mdb-modal-footer>
+        <mdb-btn color="secondary" @click.native="modal = false">Close</mdb-btn>
+      </mdb-modal-footer>
+    </mdb-modal>
   </div>
 
 
@@ -46,7 +70,7 @@
 </template>
 
 <script>
-  import { mdbNavbar, mdbNavbarBrand, mdbNavbarToggler, mdbNavbarNav, mdbNavItem, mdbBtn,mdbInput} from 'mdbvue';
+  import { mdbNavbar, mdbNavbarBrand, mdbNavbarToggler, mdbNavbarNav, mdbNavItem, mdbBtn,mdbInput,mdbModal, mdbModalHeader, mdbModalTitle, mdbModalBody, mdbModalFooter} from 'mdbvue';
   import axios from 'axios'
 
   export default {
@@ -57,7 +81,8 @@
             email: '',
             cards: [],
             numberOfCard: '',
-            amount: ''
+            amount: '',
+            modal: false
         }
     },
     name: 'NavbarPage',
@@ -68,15 +93,19 @@
       mdbNavbarNav,
       mdbNavItem,
       mdbBtn,
-      mdbInput
+      mdbInput,
+      mdbModal,
+      mdbModalHeader,
+      mdbModalTitle,
+      mdbModalBody,
+      mdbModalFooter,
     },
     methods: {
      logout() {
-          this.$store.dispatch('logout');
           this.$router.push('/login')
      },
      loadData(){
-       axios.get('/api/customer/info/'+this.$store.getters.getToken)
+       axios.get('/api/customer/info/'+this.$cookie.get('token'))
       .then(response =>{
         this.$data.firstName = response.data.firstName;
         this.$data.lastName = response.data.lastName;
@@ -84,14 +113,14 @@
       })
      },
      createCard(){
-       axios.post('/api/card/createCard/'+this.$store.getters.getToken)
+       axios.post('/api/card/createCard/'+this.$cookie.get('token'))
        .then(response =>{
          this.loadCard();
           console.log(response);
        })
      },
      loadCard(){
-       axios.get('/api/card/getCard/'+this.$store.getters.getToken)
+       axios.get('/api/card/getCard/'+this.$cookie.get('token'))
        .then(response =>{
          this.$data.cards = response.data
        })
@@ -131,17 +160,14 @@
   .button{
     width: 30%;
   }
-  .list3 {
-    margin-left: -70%;
-    font-size: 160%;
-  }
-  .pay{
-    margin-left: 55%;
-    margin-top: -15.4%;
+  .table{
     width: 30%;
+  }
+  .list3 {
+    
+    font-size: 140%;
   }
   .item{
     width: 70%;
   }
-  
 </style>

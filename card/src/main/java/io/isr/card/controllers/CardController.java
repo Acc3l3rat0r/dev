@@ -8,12 +8,11 @@ import io.isr.card.repositories.CardRepositories;
 import io.isr.card.services.CardService;
 import io.isr.card.services.FeignService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 import static org.springframework.http.ResponseEntity.ok;
 
@@ -30,11 +29,8 @@ public class CardController {
 	
 	@PostMapping("/createCard/{token}")
 	public ResponseEntity createCard(@PathVariable String token) {
-		Card card = cardService.CreateCard(token);
-		String number = card.getCardNumber();
-		Map<Object, Object> model = new HashMap<>();
-		model.put("message", "Card with number: " + number + " created");
-		return ok(model);
+		cardService.CreateCard(token);
+		return ok(HttpStatus.OK);
 	}
 	
 	@GetMapping("/getCard/{token}")
@@ -54,9 +50,7 @@ public class CardController {
 		cardTo.setBalance(cardTo.getBalance()+amount);
 		cardRepositories.save(cardFrom);
 		cardRepositories.save(cardTo);
-		Map<Object, Object> model = new HashMap<>();
-		model.put("message", "Money transferred");
-		return ok(model);
+		return ok(HttpStatus.OK);
 	}
 	
 	@PutMapping("/pay")
@@ -64,8 +58,6 @@ public class CardController {
 		Card card = cardService.findByCardNumber(paymentDto.getNumberOfCard());
 		card.setBalance(card.getBalance()+paymentDto.getAmount());
 		cardRepositories.save(card);
-		Map<Object, Object> model = new HashMap<>();
-		model.put("message", "Successful pay operation ");
-		return ok(model);
+		return ok(HttpStatus.OK);
 	}
 }
