@@ -43,12 +43,26 @@
         <mdb-modal-title>Add money</mdb-modal-title>
       </mdb-modal-header>
       <mdb-modal-body>
-          <mdb-input type="text" placeholder="Card number" v-model="numberOfCard"/>
+          <select class="form-control" v-model="numberOfCard">
+            <option value="" selected disabled>Choose card</option>
+            <option v-for="card in cards" :key="card" :value="card.cardNumber">{{ card.cardNumber }}</option>
+          </select>
           <mdb-input type="text" placeholder="Amount" v-model="amount"/>
           <mdb-btn color="primary" @click="pay">To pay</mdb-btn>
       </mdb-modal-body>
       <mdb-modal-footer>
         <mdb-btn color="secondary" @click.native="modal = false">Close</mdb-btn>
+      </mdb-modal-footer>
+    </mdb-modal>
+  </div>
+
+  <div>
+    <mdb-modal :show="modal2" @close="modal2 = false">
+      <mdb-modal-header>
+        <mdb-modal-title>Card added successful</mdb-modal-title>
+      </mdb-modal-header>
+      <mdb-modal-footer>
+        <mdb-btn color="secondary" @click.native="modal2 = false">Close</mdb-btn>
       </mdb-modal-footer>
     </mdb-modal>
   </div>
@@ -82,7 +96,8 @@
             cards: [],
             numberOfCard: '',
             amount: '',
-            modal: false
+            modal: false,
+            modal2: false
         }
     },
     name: 'NavbarPage',
@@ -116,6 +131,7 @@
        axios.post('/api/card/createCard/'+this.$cookie.get('token'))
        .then(response =>{
          this.loadCard();
+         this.modal2 = true;
           console.log(response);
        })
      },

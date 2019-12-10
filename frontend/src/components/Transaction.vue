@@ -14,17 +14,34 @@
   </mdb-navbar>
 
   <div class="transfer">
-    <b-list-group-item class="item">Transfer to another card</b-list-group-item>
-    <mdb-input type="text" placeholder="Card from" v-model="cardFrom"/>
-    <mdb-input type="text" placeholder="Card to" v-model="cardTo"/>
+    <select class="form-control" v-model="cardFrom">
+      <option value="" selected disabled>Choose card from</option>
+      <option v-for="card in cards" :key="card" :value="card.cardNumber">{{ card.cardNumber }}</option>
+    </select>
+    <select class="form-control" v-model="cardTo">
+      <option value="" selected disabled>Choose card to</option>
+      <option v-for="card in cards" :key="card" :value="card.cardNumber">{{ card.cardNumber }}</option>
+    </select>
     <mdb-input type="text" placeholder="Amount" v-model="amount"/>
     <mdb-btn color="primary" @click="transfer">Transfer money</mdb-btn>
   </div>
+
+  <div>
+    <mdb-modal :show="modal" @close="modal = false">
+      <mdb-modal-header>
+        <mdb-modal-title>Transfered successful</mdb-modal-title>
+      </mdb-modal-header>
+      <mdb-modal-footer>
+        <mdb-btn color="secondary" @click.native="modal = false">Close</mdb-btn>
+      </mdb-modal-footer>
+    </mdb-modal>
+  </div>
+
 </div>
 </template>
 
 <script>
-  import { mdbNavbar, mdbNavbarBrand, mdbNavbarToggler, mdbNavbarNav, mdbNavItem, mdbBtn,mdbInput} from 'mdbvue';
+  import { mdbNavbar, mdbNavbarBrand, mdbNavbarToggler, mdbNavbarNav, mdbNavItem, mdbBtn,mdbInput, mdbModal, mdbModalHeader,mdbModalFooter} from 'mdbvue';
   import axios from 'axios'
 
   export default {
@@ -32,7 +49,9 @@
         return{
             cardFrom:'',
             cardTo:'',
-            amount:''
+            amount:'',
+            cards: [],
+            modal: false
         }
     },
     components: {
@@ -42,7 +61,10 @@
       mdbNavbarNav,
       mdbNavItem,
       mdbBtn,
-      mdbInput
+      mdbInput,
+      mdbModal,
+      mdbModalHeader,
+      mdbModalFooter
     },
     methods: {
      logout() {
@@ -55,9 +77,19 @@
          'cardTo': this.$data.cardTo, 
          'amount': this.$data.amount})
        .then(response =>{
+         this.modal = true;
          console.log(response);
        })
+     },
+     loadCard(){
+       axios.get('/api/card/getCard/'+this.$cookie.get('token'))
+       .then(response =>{
+         this.$data.cards = response.data
+       })
      }
+    },
+    mounted(){
+      this.loadCard();
     }
   }
 </script>
