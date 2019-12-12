@@ -72,17 +72,19 @@
           this.$router.push('/login')
      },
      transfer(){
+       const header = {'Authorization': 'Bearer ' +this.$cookie.get('token')};
          axios.put('/api/transaction/transfer', 
          {'cardFrom': this.$data.cardFrom,
          'cardTo': this.$data.cardTo, 
-         'amount': this.$data.amount})
+         'amount': this.$data.amount}, { headers: header })
        .then(response =>{
          this.modal = true;
          console.log(response);
        })
      },
      loadCard(){
-       axios.get('/api/card/getCard/'+this.$cookie.get('token'))
+       const header = {'Authorization': 'Bearer ' +this.$cookie.get('token')};
+       axios.get('/api/card/getCard/'+this.$cookie.get('token'),{ headers: header })
        .then(response =>{
          this.$data.cards = response.data
        })

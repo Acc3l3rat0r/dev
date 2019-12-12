@@ -120,7 +120,8 @@
           this.$router.push('/login')
      },
      loadData(){
-       axios.get('/api/customer/info/'+this.$cookie.get('token'))
+       const header = {'Authorization': 'Bearer ' +this.$cookie.get('token')};
+       axios.get('/api/customer/info/'+this.$cookie.get('token'), { headers: header })
       .then(response =>{
         this.$data.firstName = response.data.firstName;
         this.$data.lastName = response.data.lastName;
@@ -128,7 +129,8 @@
       })
      },
      createCard(){
-       axios.post('/api/card/createCard/'+this.$cookie.get('token'))
+       const header = {'Authorization': 'Bearer ' +this.$cookie.get('token')};
+       axios.post('/api/card/createCard/'+this.$cookie.get('token'), { headers: header })
        .then(response =>{
          this.loadCard();
          this.modal2 = true;
@@ -136,13 +138,15 @@
        })
      },
      loadCard(){
-       axios.get('/api/card/getCard/'+this.$cookie.get('token'))
+       const header = {'Authorization': 'Bearer ' +this.$cookie.get('token')};
+       axios.get('/api/card/getCard/'+this.$cookie.get('token'), { headers: header })
        .then(response =>{
          this.$data.cards = response.data
        })
      },
      pay(){
-       axios.put('/api/card/pay', {'numberOfCard': this.$data.numberOfCard, 'amount': this.$data.amount})
+       const header = {'Authorization': 'Bearer ' +this.$cookie.get('token')};
+       axios.put('/api/card/pay', {'numberOfCard': this.$data.numberOfCard, 'amount': this.$data.amount}, { headers: header })
        .then(response =>{
          this.loadCard();
          console.log(response);
