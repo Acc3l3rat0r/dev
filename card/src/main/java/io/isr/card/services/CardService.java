@@ -24,6 +24,14 @@ public class CardService {
 		return cardRepositories.findByCardNumber(cardNumber);
 	}
 	
+	public Card findCardById(Long id){
+		return cardRepositories.findCardById(id);
+	}
+	
+	public Card finCardByUserId(Long id){
+		return cardRepositories.findCardById(id);
+	}
+	
 	public Card CreateCard(String token){
 		Card card = new Card();
 		UserDto userDto = feignService.getUser(token);

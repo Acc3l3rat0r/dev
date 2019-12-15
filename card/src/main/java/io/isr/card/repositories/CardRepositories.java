@@ -9,5 +9,7 @@ import java.util.ArrayList;
 @Repository
 public interface CardRepositories extends JpaRepository<Card, Long> {
 	ArrayList<Card> findAllByUserId(Long userId);
+	Card findCardByUserId(Long userId);
 	Card findByCardNumber(String cardNumber);
+	Card findCardById(Long id);
 }

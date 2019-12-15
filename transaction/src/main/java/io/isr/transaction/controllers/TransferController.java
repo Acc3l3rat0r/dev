@@ -1,6 +1,7 @@
 package io.isr.transaction.controllers;
 
 import io.isr.transaction.dto.TransferDto;
+import io.isr.transaction.dto.TransferToClientDto;
 import io.isr.transaction.services.FeignService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,6 +19,12 @@ public class TransferController {
 	@PutMapping("/transfer")
 	public ResponseEntity transfer(@RequestBody TransferDto transferDto){
 		feignService.putMoney(transferDto);
+		return ResponseEntity.ok(HttpStatus.OK);
+	}
+	
+	@PutMapping("/transferToClient")
+	public ResponseEntity transferToClient(@RequestBody TransferToClientDto transferToClientDto){
+		feignService.putMoneyToClient(transferToClientDto);
 		return ResponseEntity.ok(HttpStatus.OK);
 	}
 }

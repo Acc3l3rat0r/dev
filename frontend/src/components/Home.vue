@@ -1,8 +1,5 @@
 <template>
 <div> 
-  <div class="image">
-    <b-img src="https://picsum.photos/380/230/?image=41" fluid alt="Fluid image" class="rounded"></b-img>
-  </div>
 
   <div class="list">
     <b-list-group>
@@ -19,7 +16,7 @@
       <table class="table">
         <thead>
           <tr>
-            <th>Card nubmber</th>
+            <th>Card number</th>
             <th>Balance</th>
           </tr>
         </thead>
@@ -34,7 +31,28 @@
 
       <mdb-btn class="button" color="primary" @click="createCard">Add new card</mdb-btn>
       <mdb-btn class="button" color="primary" @click.native="modal = true">Add money</mdb-btn>
+      <mdb-btn class="button" color="primary" @click.native="modal3 = true">View card info</mdb-btn>
     </b-list-group>
+  </div>
+
+  <div>
+    <mdb-modal :show="modal3" @close="modal3 = false">
+      <mdb-modal-header>
+        <mdb-modal-title>View card info</mdb-modal-title>
+      </mdb-modal-header>
+      <mdb-modal-body>
+          <select class="form-control" v-model="idInfo">
+            <option value="" selected disabled>Choose card</option>
+            <option v-for="card in cards" :key="card" :value="card.id">{{ card.cardNumber }} balance {{card.balance}}</option>
+          </select>
+          <div>
+            <span v-if="tab == 'tab'"> Card number: {{cardInfo.cardNumber}}</span>
+          </div>
+          <mdb-btn color="primary" @click="getCardInfo">Get info</mdb-btn>
+          <mdb-btn color="primary" @click="tab = ''" @click.native="modal3 = false">Close</mdb-btn>
+          
+      </mdb-modal-body>
+    </mdb-modal>
   </div>
 
   <div>
@@ -43,16 +61,13 @@
         <mdb-modal-title>Add money</mdb-modal-title>
       </mdb-modal-header>
       <mdb-modal-body>
-          <select class="form-control" v-model="numberOfCard">
+          <select class="form-control" v-model="id">
             <option value="" selected disabled>Choose card</option>
-            <option v-for="card in cards" :key="card" :value="card.cardNumber">{{ card.cardNumber }}</option>
+            <option v-for="card in cards" :key="card" :value="card.id">{{ card.cardNumber }} balance {{card.balance}}</option>
           </select>
           <mdb-input type="text" placeholder="Amount" v-model="amount"/>
           <mdb-btn color="primary" @click="pay">To pay</mdb-btn>
       </mdb-modal-body>
-      <mdb-modal-footer>
-        <mdb-btn color="secondary" @click.native="modal = false">Close</mdb-btn>
-      </mdb-modal-footer>
     </mdb-modal>
   </div>
 
@@ -84,7 +99,7 @@
 </template>
 
 <script>
-  import { mdbNavbar, mdbNavbarBrand, mdbNavbarToggler, mdbNavbarNav, mdbNavItem, mdbBtn,mdbInput,mdbModal, mdbModalHeader, mdbModalTitle, mdbModalBody, mdbModalFooter} from 'mdbvue';
+  import { mdbNavbar, mdbNavbarBrand, mdbNavbarToggler, mdbNavbarNav, mdbNavItem, mdbBtn,mdbInput,mdbModal, mdbModalHeader, mdbModalTitle, mdbModalBody} from 'mdbvue';
   import axios from 'axios'
 
   export default {
@@ -94,10 +109,14 @@
             lastName: '',
             email: '',
             cards: [],
-            numberOfCard: '',
+            cardInfo: '',
+            id: '',
+            idInfo: '',
             amount: '',
             modal: false,
-            modal2: false
+            modal2: false,
+            modal3: false,
+            tab: ''
         }
     },
     name: 'NavbarPage',
@@ -113,7 +132,6 @@
       mdbModalHeader,
       mdbModalTitle,
       mdbModalBody,
-      mdbModalFooter,
     },
     methods: {
      logout() {
@@ -129,7 +147,7 @@
       })
      },
      createCard(){
-       const header = {'Authorization': 'Bearer ' +this.$cookie.get('token')};
+       const header = {'Authorization': 'Bearer ' + this.$cookie.get('token')};
        axios.post('/api/card/createCard/'+this.$cookie.get('token'), { headers: header })
        .then(response =>{
          this.loadCard();
@@ -146,10 +164,19 @@
      },
      pay(){
        const header = {'Authorization': 'Bearer ' +this.$cookie.get('token')};
-       axios.put('/api/card/pay', {'numberOfCard': this.$data.numberOfCard, 'amount': this.$data.amount}, { headers: header })
+       axios.put('/api/card/pay', {'id': this.$data.id, 'amount': this.$data.amount}, { headers: header })
        .then(response =>{
          this.loadCard();
+         this.modal = false;
          console.log(response);
+       })
+     },
+     getCardInfo(){
+       const header = {'Authorization': 'Bearer ' +this.$cookie.get('token')};
+       axios.get('/api/card/getCardInfo/'+this.idInfo, { headers: header })
+       .then(response =>{
+         this.tab = 'tab';
+         this.$data.cardInfo = response.data
        })
      }
     },
@@ -161,13 +188,9 @@
 </script>
 
 <style>
-  .image {
-  margin-left: -60%;
-  margin-top: 50px;
-  }
   .list {
-  margin-left: 30%;
-  margin-top: -12%;
+  margin-left: 10%;
+  margin-top: 0%;
   }
   .list-group-item {
     width: 30%;

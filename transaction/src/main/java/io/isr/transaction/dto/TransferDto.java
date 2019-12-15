@@ -5,28 +5,28 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class TransferDto {
 	
 	@JsonProperty
-	private String cardFrom;
+	private Long idFrom;
 	
 	@JsonProperty
-	private String cardTo;
+	private Long idTo;
 	
 	@JsonProperty
 	private Long amount;
 	
-	public String getCardFrom() {
-		return cardFrom;
+	public Long getIdFrom() {
+		return idFrom;
 	}
 	
-	public void setCardFrom(String cardFrom) {
-		this.cardFrom = cardFrom;
+	public void setIdFrom(Long idFrom) {
+		this.idFrom = idFrom;
 	}
 	
-	public String getCardTo() {
-		return cardTo;
+	public Long getIdTo() {
+		return idTo;
 	}
 	
-	public void setCardTo(String cardTo) {
-		this.cardTo = cardTo;
+	public void setIdTo(Long idTo) {
+		this.idTo = idTo;
 	}
 	
 	public Long getAmount() {

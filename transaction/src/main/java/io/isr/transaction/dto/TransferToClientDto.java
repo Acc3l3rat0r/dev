@@ -1,15 +1,8 @@
-package io.isr.card.dto;
+package io.isr.transaction.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
-public class TransferDto {
-	@JsonProperty
+public class TransferToClientDto {
 	private Long idFrom;
-	
-	@JsonProperty
-	private Long idTo;
-	
-	@JsonProperty
+	private String cardTo;
 	private Long amount;
 	
 	public Long getIdFrom() {
@@ -20,12 +13,12 @@ public class TransferDto {
 		this.idFrom = idFrom;
 	}
 	
-	public Long getIdTo() {
-		return idTo;
+	public String getCardTo() {
+		return cardTo;
 	}
 	
-	public void setIdTo(Long idTo) {
-		this.idTo = idTo;
+	public void setCardTo(String cardTo) {
+		this.cardTo = cardTo;
 	}
 	
 	public Long getAmount() {

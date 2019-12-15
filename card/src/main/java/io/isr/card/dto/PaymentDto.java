@@ -3,18 +3,18 @@ package io.isr.card.dto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class PaymentDto {
-	@JsonProperty("numberOfCard")
-	private String numberOfCard;
+	@JsonProperty("id")
+	private Long id;
 	
 	@JsonProperty("amount")
 	private Long amount;
 	
-	public String getNumberOfCard() {
-		return numberOfCard;
+	public Long getId() {
+		return id;
 	}
 	
-	public void setNumberOfCard(String numberOfCard) {
-		this.numberOfCard = numberOfCard;
+	public void setId(Long id) {
+		this.id = id;
 	}
 	
 	public Long getAmount() {
