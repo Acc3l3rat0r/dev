@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 
 import static org.springframework.http.ResponseEntity.ok;
@@ -26,14 +27,16 @@ public class CardController {
 	CardRepositories cardRepositories;
 	
 	
-	@PostMapping("/createCard/{token}")
-	public ResponseEntity createCard(@PathVariable String token) {
+	@PostMapping("/createCard")
+	public ResponseEntity createCard(HttpServletRequest request) {
+		String token = request.getHeader("Authorization").substring(7);
 		cardService.CreateCard(token);
 		return ok(HttpStatus.OK);
 	}
 	
-	@GetMapping("/getCard/{token}")
-	public ResponseEntity getCard(@PathVariable String token) {
+	@GetMapping("/getCard")
+	public ResponseEntity getCard(HttpServletRequest request) {
+		String token = request.getHeader("Authorization").substring(7);
 		UserDto userDto = feignService.getUser(token);
 		ArrayList<Card> cards = cardService.findAllCardsByUserId(userDto.getId());
 		ArrayList<CardDto> cardDtos = new ArrayList<>();

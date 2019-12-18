@@ -1,6 +1,3 @@
-import io.isr.gradle.swaggerSpringGen
-import org.springframework.boot.gradle.tasks.bundling.BootJar
-
 plugins {
     java
     id("org.springframework.boot") version "2.2.1.RELEASE"
@@ -17,7 +14,6 @@ repositories {
     extra["springCloudVersion"] = "Hoxton.RC2"
 }
 
-swaggerSpringGen("authentication", file("api/authentication.yaml"))
 
 dependencies {
     implementation("org.springframework.cloud:spring-cloud-starter-netflix-eureka-client")

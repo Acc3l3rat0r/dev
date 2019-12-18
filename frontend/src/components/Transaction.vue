@@ -7,7 +7,7 @@
 
     <mdb-navbar position="top" color="indigo" dark>
     <mdb-navbar-brand href="https://mdbootstrap.com/">
-      NetBank
+      Boom Bank
     </mdb-navbar-brand>
     <mdb-navbar-toggler>
       <mdb-navbar-nav>
@@ -113,7 +113,7 @@
      },
      loadCard(){
        const header = {'Authorization': 'Bearer ' +this.$cookie.get('token')};
-       axios.get('/api/card/getCard/'+this.$cookie.get('token'),{ headers: header })
+       axios.get('/api/card/getCard',{ headers: header })
        .then(response =>{
          this.$data.cards = response.data
        })

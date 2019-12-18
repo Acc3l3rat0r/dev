@@ -85,7 +85,7 @@
 
   <mdb-navbar position="top" color="indigo" dark>
     <mdb-navbar-brand href="https://mdbootstrap.com/">
-      NetBank
+      Boom Bank
     </mdb-navbar-brand>
     <mdb-navbar-toggler>
       <mdb-navbar-nav>
@@ -139,7 +139,7 @@
      },
      loadData(){
        const header = {'Authorization': 'Bearer ' +this.$cookie.get('token')};
-       axios.get('/api/customer/info/'+this.$cookie.get('token'), { headers: header })
+       axios.get('/api/customer/info', { headers: header })
       .then(response =>{
         this.$data.firstName = response.data.firstName;
         this.$data.lastName = response.data.lastName;
@@ -147,8 +147,8 @@
       })
      },
      createCard(){
-       const header = {'Authorization': 'Bearer ' + this.$cookie.get('token')};
-       axios.post('/api/card/createCard/'+this.$cookie.get('token'), { headers: header })
+       const header = {'Authorization': 'Bearer ' +this.$cookie.get('token')};
+       axios.post('/api/card/createCard',{'id': this.$data.id},{headers: header})
        .then(response =>{
          this.loadCard();
          this.modal2 = true;
@@ -157,7 +157,7 @@
      },
      loadCard(){
        const header = {'Authorization': 'Bearer ' +this.$cookie.get('token')};
-       axios.get('/api/card/getCard/'+this.$cookie.get('token'), { headers: header })
+       axios.get('/api/card/getCard', { headers: header })
        .then(response =>{
          this.$data.cards = response.data
        })
